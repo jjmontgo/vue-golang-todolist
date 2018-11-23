@@ -1,5 +1,5 @@
 # vue-golang-todolist
-A frontend Vue app built on top of (golang-todolist)[https://github.com/jjmontgo/golang-todolist] for educational purposes.
+A frontend Vue app built on top of [golang-todolist](https://github.com/jjmontgo/golang-todolist) for educational purposes.
 
 ## Installation
 
