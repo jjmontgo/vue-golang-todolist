@@ -1,7 +1,7 @@
 <template>
 	<div id="app" class="layout">
 		<header>
-			<app-header title="Poopy App" />
+			<app-header title="Not so poopy" />
 		</header>
 		<div class="body">
 			<main class="content">

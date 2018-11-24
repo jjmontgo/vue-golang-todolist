@@ -9,6 +9,8 @@ import TodolistEdit from './pages/TodolistEdit.vue';
 import TodolistEmail from './pages/TodolistEmail.vue';
 import TodolistImage from './pages/TodolistImage.vue';
 import TodoEdit from './pages/TodoEdit.vue';
+import UserIndex from './pages/UserIndex.vue';
+import UserEdit from './pages/UserEdit.vue';
 
 Vue.use(Router);
 
@@ -30,5 +32,8 @@ export default new Router({
 			component: TodolistImage },
 		{ name: 'todo_new', path: '/todo/new/:todo_list_id', component: TodoEdit },
 		{ name: 'todo_edit', path: '/todo/edit/:id', component: TodoEdit },
+		{ name: 'users', path: '/users', component: UserIndex },
+		{ name: 'user_new', path: '/user/new', component: UserEdit },
+		{ name: 'user_edit', path: '/user/edit/:id', component: UserEdit },
 	]
 });
