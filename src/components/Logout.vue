@@ -8,7 +8,7 @@ import { ajaxGet } from './../lib/ajax';
 export default {
 	name: 'Logout',
 	created() {
-		let backendUrl = this.$root.getBackendUrl('login');
+		let backendUrl = this.$root.getBackendUrl('logout');
 		ajaxGet(backendUrl)
 			.then(() => {
 				this.$store.commit('logout');

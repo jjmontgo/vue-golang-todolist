@@ -1,51 +1,102 @@
 <template>
-	<div class="todolist-index-page">
+	<div id="todolist-index-page">
+		<div style="float: right">
+			<router-link title="new todolist" :to="{name: 'todolist_new'}">
+				<v-icon name="plus-circle" label="new todolist" scale="3" />
+			</router-link>
+		</div>
 		<h1>Todo Lists</h1>
-		<router-link :to="{name: 'todolist_new'}">New Todolist</router-link>
+
 		<p>These are your todo lists:</p>
-		<ul class="list-group">
-			<li
+		<div class="cards">
+			<el-card
 				v-for="todolist in todolists"
 				:key="todolist.id"
-				class="list-group-item">
-				<div class="row">
-					<div class="col-sm">
+				class="box-card">
+				<div slot="header" class="clearfix">
+					<span>{{ todolist.name }}</span>
+					<div style="float:right">
 						<router-link
-							:to="{name: 'todolist_image', params: {id: todolist.id}}"
-							class="btn btn-link">
-							<img v-if="todolist.img_src" :src="todolist.img_src">
-							<div v-else>No Image</div>
-						</router-link>
-					</div>
-					<div class="col-sm">
-						{{ todolist.id }} {{ todolist.name }}
-					</div>
-					<div class="col-sm">
+							title="edit"
+							:to="{name: 'todolist_edit', params: {id: todolist.id}}"
+							class="btn btn-secondary">
+							<v-icon name="edit" label="edit" />
+						</router-link>&nbsp;
+
 						<router-link
+							title="see todos"
 							:to="{name: 'todos', params: {id: todolist.id}}"
-							class="btn btn-secondary">Open</router-link>&nbsp;
+							class="btn btn-secondary">
+							<v-icon name="list-ol" label="see todos" />
+						</router-link>&nbsp;
+
 						<router-link
-								:to="{name: 'todolist_edit', params: {id: todolist.id}}"
-								class="btn btn-secondary">Edit</router-link>&nbsp;
-						<router-link
-								:to="{name: 'todolist_email', params: {id: todolist.id}}"
-								class="btn btn-secondary">Email</router-link>&nbsp;
-						<button
+							title="email"
+							:to="{name: 'todolist_email', params: {id: todolist.id}}"
+							class="btn btn-secondary">
+							<v-icon name="at" label="email" />
+						</router-link>&nbsp;
+
+						<a href="#"
+							title="delete"
 							type="submit"
-							class="btn btn-danger"
-							@click="deleteTodolist(todolist.id)">Delete</button>
+							@click.prevent="deleteTodolist(todolist.id)">
+							<v-icon name="trash" label="delete" />
+						</a>
 					</div>
 				</div>
-			</li>
-		</ul>
+				<div>
+					<router-link
+						:to="{name: 'todolist_image', params: {id: todolist.id}}"
+						class="btn btn-link">
+						<img v-if="todolist.img_src" :src="todolist.img_src" style="width: 100%">
+						<div v-else>No Image</div>
+					</router-link>
+				</div>
+			</el-card>
+		</div>
 	</div>
 </template>
 
+<style lang="scss">
+	#todolist-index-page {
+		@media (min-width: 768px) {
+			.cards {
+				display: flex;
+				flex-wrap: wrap;
+			}
+		}
+
+		.cards {
+			>.box-card {
+				flex-basis: 31%;
+				margin: 1%;
+
+				:nth-of-type(3n) {
+					margin-right: 0;
+				}
+				:nth-of-type(3n+1) {
+					margin-left: 0;
+				}
+			}
+		}
+	}
+</style>
+
 <script>
 import { ajaxGet, ajaxPost } from './../lib/ajax';
+import 'vue-awesome/icons/plus-circle';
+import 'vue-awesome/icons/edit'
+import 'vue-awesome/icons/list-ol'
+import 'vue-awesome/icons/at'
+import 'vue-awesome/icons/trash'
+import Icon from 'vue-awesome/components/Icon'
 
 export default {
 	name: 'TodolistIndex',
+	components: {
+		'v-icon': Icon,
+	},
 	data() {
 		return {
 			todolists: [],

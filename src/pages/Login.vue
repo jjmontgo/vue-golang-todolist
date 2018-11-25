@@ -1,34 +1,43 @@
 <template>
-	<div class="login-page">
-		<h1>Login</h1>
+	<div id="login-page">
+		<el-form>
+			<h1>Login</h1>
 
-		<div v-if="loginError" class="alert alert-danger" role="alert">
-			Username or password incorrect.
-		</div>
+			<p v-if="loginError">
+				<el-alert
+					type="error"
+					title="Username or password incorrect.">
+				</el-alert>
+			</p>
 
-		<form @submit.prevent="onSubmit">
-			<div class="form-group">
-				<label for="username">Username</label>
-				<input
-					id="username"
-					v-model="username"
-					class="form-control"
-					type="text"
-					name="username">
-			</div>
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input
-					id="password"
-					v-model="password"
-					class="form-control"
-					type="password"
-					name="password">
-			</div>
-			<input type="submit" value="Login">
-		</form>
+			<el-form-item label="Username">
+				<el-input v-model="username"></el-input>
+			</el-form-item>
+
+			<el-form-item label="Password">
+				<el-input type="password" v-model="password"></el-input>
+			</el-form-item>
+
+			<el-form-item>
+				<el-button type="primary" @click="onSubmit">Login</el-button>
+			</el-form-item>
+		</el-form>
 	</div>
 </template>
+
+<style lang="scss">
+	#login-page {
+		display: flex;
+
+		>form {
+			margin: auto;
+		}
+
+	}
+
+
+
+</style>
 
 <script>
 import { ajaxPost } from './../lib/ajax';

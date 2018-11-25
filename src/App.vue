@@ -1,13 +1,11 @@
 <template>
-	<div id="app" class="layout">
+	<div id="app">
 		<header>
 			<app-header title="Not so poopy" />
 		</header>
-		<div class="body">
-			<main class="content">
-				<app-body />
-			</main>
-		</div>
+		<main class="content">
+			<app-body />
+		</main>
 		<footer>
 			<app-footer />
 		</footer>

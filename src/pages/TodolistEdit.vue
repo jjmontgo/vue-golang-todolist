@@ -2,20 +2,27 @@
 	<div class="todolist-edit-page">
 		<h1>Edit Todolist</h1>
 
-		<router-link
-			:to="{ name: 'dashboard' }"
-			class="btn btn-link">Back to todo lists</router-link>
+		<p v-if="errorMessage !== false">
+			<el-alert type="error" :title="errorMessage"></el-alert>
+		</p>
 
-		<div v-if="errorMessage !== false" class="alert alert-danger" role="alert">
-			{{ errorMessage }}
-		</div>
-
-		<form @submit.prevent="onSubmit">
-			<div class="form-group">
-				<input v-model="todolist.name" class="form-control" type="text">
-			</div>
-			<input type="submit" value="Save">
-		</form>
+		<el-form :inline="true" @submit.prevent.native="onSubmit()">
+			<el-form-item>
+				<el-input
+					v-model="todolist.name"
+					placeholder="Name of Todo List">
+				</el-input>
+			</el-form-item>
+			<el-form-item>
+				<el-button type="primary" @click="onSubmit">Save</el-button>
+				&nbsp;
+				<router-link
+					:to="{ name: 'dashboard' }"
+					class="btn btn-link">
+					<el-button>Back to todo lists</el-button>
+				</router-link>
+			</el-form-item>
+		</el-form>
 	</div>
 </template>
 

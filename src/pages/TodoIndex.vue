@@ -38,7 +38,7 @@ export default {
 	name: 'TodoIndex',
 	data() {
 		return {
-			todolist: {},
+			todolist: {id: 0},
 			todos: [],
 		};
 	},
