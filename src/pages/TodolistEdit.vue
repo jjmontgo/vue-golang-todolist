@@ -1,6 +1,6 @@
 <template>
 	<div class="todolist-edit-page">
-		<h1>Edit Todolist</h1>
+		<h1>{{ t.todolistEditTitle }}</h1>
 
 		<p v-if="errorMessage !== false">
 			<el-alert type="error" :title="errorMessage"></el-alert>
@@ -10,16 +10,15 @@
 			<el-form-item>
 				<el-input
 					v-model="todolist.name"
-					placeholder="Name of Todo List">
+					:placeholder="t.todolistNameLabel">
 				</el-input>
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" @click="onSubmit">Save</el-button>
+				<el-button type="primary" @click="onSubmit">{{t.saveLabel}}</el-button>
 				&nbsp;
 				<router-link
-					:to="{ name: 'dashboard' }"
-					class="btn btn-link">
-					<el-button>Back to todo lists</el-button>
+					:to="{ name: 'dashboard' }">
+					<el-button>{{ t.backToTodolistsLabel }}</el-button>
 				</router-link>
 			</el-form-item>
 		</el-form>
@@ -33,6 +32,7 @@ export default {
 	name: 'TodolistEdit',
 	data() {
 		return {
+			t: window.t,
 			errorMessage: false,
 			todolist: { id: '', name: '' },
 		};

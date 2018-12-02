@@ -3,12 +3,12 @@
 		<el-menu
 			v-if="loggedIn"
 			:router="true"
-			:default-active="activeIndex"
+			:default-active="$router.path"
 			class="el-menu-demo"
 			mode="horizontal">
-			<el-menu-item index="/">Todo Lists</el-menu-item>
-			<el-menu-item index="/users">Users</el-menu-item>
-			<el-menu-item index="/logout">Logout</el-menu-item>
+			<el-menu-item index="/">{{ t.todolistsTitle }}</el-menu-item>
+			<el-menu-item index="/users">{{ t.usersTitle }}</el-menu-item>
+			<el-menu-item index="/logout">{{ t.logoutLabel }}</el-menu-item>
 		</el-menu>
 	</div>
 </template>
@@ -24,11 +24,8 @@ export default {
 	},
 	data() {
 		return {
-			activeIndex: null,
+			t: window.t,
 		};
-	},
-	mounted () {
-		this.activeIndex = this.$route.path;
 	},
 	computed: {
 		loggedIn() {

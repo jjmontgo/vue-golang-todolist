@@ -1,33 +1,37 @@
 <template>
 	<div class="user-index-page">
-		<h1>Users</h1>
-		<router-link
-			:to="{ name: 'user_new' }"
-			class="btn btn-primary">New User</router-link>
-		<p>&nbsp;</p>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Username</th>
-					<th>Email</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tr v-for="user in users" :key="user.id">
-				<td>{{ user.username}}</td>
-				<td>{{ user.email }}</td>
-				<td>
+		<h1>{{ t.usersTitle }}</h1>
+		<p>
+			<router-link
+				:to="{ name: 'user_new' }"
+				class="btn btn-primary">
+				<el-button type="primary">{{ t.newUserLabel }}</el-button>
+			</router-link>&nbsp;
+			<router-link
+				:to="{ name: 'dashboard' }"
+				class="btn btn-link">
+				<el-button>
+					{{ t.backToTodolistsLabel }}
+				</el-button>
+			</router-link>
+		</p>
+		<el-table :data="users" style="width: 100%">
+			<el-table-column :label="t.usernameLabel" prop="username"></el-table-column>
+			<el-table-column :label="t.emailLabel" prop="email"></el-table-column>
+			<el-table-column fixed="right" :label="t.operationsLabel" width="120">
+				<template slot-scope="scope">
 					<router-link
-						:to="{ name: 'user_edit', params: {id: user.id} }"
-						class="btn btn-secondary">Edit</router-link>
+						:to="{ name: 'user_edit', params: {id: scope.row.id} }"
+						class="btn btn-secondary">{{ t.editLabel }}</router-link>
 					&nbsp;
-					<button
-						type="submit"
-						class="btn btn-danger"
-						@click="deleteUser(user.id)">Delete</button>
-				</td>
-			</tr>
-		</table>
+					<el-button
+						type="text"
+						@click="deleteUser(scope.row.id)">
+						{{ t.deleteLabel }}
+					</el-button>
+				</template>
+			</el-table-column>
+		</el-table>
 	</div>
 </template>
 
@@ -38,6 +42,7 @@ export default {
 	name: 'UserIndex',
 	data() {
 		return {
+			t: window.t,
 			users: [],
 		};
 	},
@@ -55,7 +60,7 @@ export default {
 				});
 		},
 		deleteUser(id) {
-			if (confirm('Are you sure?')) {
+			if (confirm(this.t.deleteConfirmation)) {
 				let backendUrl = this.$root.getBackendUrl(
 					'user_delete',
 					{ id }

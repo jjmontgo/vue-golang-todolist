@@ -4,30 +4,36 @@
 		<p>
 			<router-link
 				:to="{ name: 'todo_new', params: {todo_list_id: todolist.id} }"
-				class="btn btn-primary">Add todo</router-link>
+				class="btn btn-primary">
+				<el-button type="primary">
+					{{ t.addTodoLabel }}
+				</el-button>
+			</router-link>&nbsp;
 			<router-link
 				:to="{ name: 'dashboard' }"
-				class="btn btn-link">Back to todo lists</router-link>
+				class="btn btn-link">
+				<el-button>
+					{{ t.backToTodolistsLabel }}
+				</el-button>
+			</router-link>
 		</p>
-		<ul class="list-group">
-			<li v-for="todo in todos" :key="todo.id" class="list-group-item">
-				<div class="row">
-					<div class="col-sm">
-						{{ todo.id }} {{ todo.name }}
-					</div>
-					<div class="col-sm">
-						<router-link
-							:to="{ name: 'todo_edit', params: {id: todo.id} }"
-							class="btn btn-secondary">Edit</router-link>
-						&nbsp;
-						<button
-							type="submit"
-							class="btn btn-danger"
-							@click="deleteTodo(todo.id)">Delete</button>
-					</div>
-				</div>
-			</li>
-		</ul>
+		<el-table :data="todos" style="width: 100%">
+			<el-table-column :label="t.nameLabel" prop="name"></el-table-column>
+			<el-table-column fixed="right" :label="t.operationsLabel" width="120">
+				<template slot-scope="scope">
+					<router-link
+						:to="{ name: 'todo_edit', params: {id: scope.row.id} }">
+						{{ t.editLabel }}
+					</router-link>
+					&nbsp;
+					<el-button
+						type="text"
+						@click="deleteTodo(scope.row.id)">
+						{{ t.deleteLabel }}
+					</el-button>
+				</template>
+			</el-table-column>
+		</el-table>
 	</div>
 </template>
 
@@ -38,6 +44,7 @@ export default {
 	name: 'TodoIndex',
 	data() {
 		return {
+			t: window.t,
 			todolist: {id: 0},
 			todos: [],
 		};
@@ -60,7 +67,7 @@ export default {
 				});
 		},
 		deleteTodo(id) {
-			if (confirm('Are you sure?')) {
+			if (confirm(this.t.deleteConfirmation)) {
 				let backendUrl = this.$root.getBackendUrl(
 					'todo_delete',
 					{ id }

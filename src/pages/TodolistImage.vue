@@ -1,28 +1,25 @@
 <template>
 	<div class="todolist-image-page">
 		<h1>Upload Todolist Image</h1>
-
-		<router-link
-			to="/"
-			class="btn btn-link">Back to Todo Lists</router-link>
-
-		<form
-			action="#"
-			method="POST"
-			enctype="multipart/form-data"
-			novalidate>
-			<div class="form-group">
+		<el-form :inline="true">
+			<el-form-item>
 				<input
 					:disabled="isUploading"
 					type="file"
 					name="file"
 					accept="image/*"
 					@change="onFileChange">
-			</div>
-			<p v-if="isUploading">
+			</el-form-item>
+			<el-form-item v-if="isUploading">
 				Uploading file, please wait...
-			</p>
-		</form>
+			</el-form-item>
+			<el-form-item>
+				<router-link
+					:to="{ name: 'dashboard'}">
+					<el-button>Back to Todo Lists</el-button>
+				</router-link>
+			</el-form-item>
+		</el-form>
 	</div>
 </template>
 

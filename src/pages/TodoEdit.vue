@@ -1,20 +1,24 @@
 <template>
 	<div class="todo-edit-page">
-		<h1>Edit Todo</h1>
-		<router-link
-			:to="{ name: 'todos', params: { id: todo.todo_list_id } }"
-			class="btn btn-link">Back to Todo List</router-link>
-
-		<div v-if="errorMessage !== false" class="alert alert-danger" role="alert">
-			{{ errorMessage }}
-		</div>
-
-		<form @submit.prevent="onSubmit">
-			<div class="form-group">
-				<input v-model="todo.name" class="form-control" type="text">
-			</div>
-			<input type="submit" value="Save">
-		</form>
+		<h1>{{ t.editTodoTitle }}</h1>
+		<p v-if="errorMessage !== false">
+			<el-alert type="error" :title="errorMessage"></el-alert>
+		</p>
+		<el-form :inline="true" @submit.prevent.native="onSubmit()">
+			<el-form-item>
+				<el-input
+					v-model="todo.name"
+					:placeholder="t.todoDescriptionLabel">
+				</el-input>
+			</el-form-item>
+			<el-form-item>
+				<el-button type="primary" @click="onSubmit">{{ t.saveLabel }}</el-button>&nbsp;
+				<router-link
+					:to="{ name: 'todos', params: { id: todo.todo_list_id } }">
+					<el-button>{{ t.backToTodolistsLabel }}</el-button>
+				</router-link>
+			</el-form-item>
+		</el-form>
 	</div>
 </template>
 
@@ -25,6 +29,7 @@ export default {
 	name: 'TodoEdit',
 	data() {
 		return {
+			t: window.t,
 			errorMessage: false,
 			todo: { id: '', name: '', todo_list_id: '' },
 		};

@@ -1,20 +1,23 @@
 <template>
 	<div class="todolist-email-page">
-		<h1>Send Todolist</h1>
-		<p>Who would you like to send the todolist to?</p>
-		<p>
-			<input
-				v-model="email"
-				type="email"
-				placeholder="Email Address"
-				class="form-control">
-		</p>
-		<p>
-			<button class="btn btn-primary" @click="sendEmail()">Send</button>
-			<router-link
-				:to="{name: 'dashboard'}"
-				class="btn btn-link">Cancel</router-link>
-		</p>
+		<h1>{{ t.emailTodolistTitle }}</h1>
+		<p>{{ t.emailTodolistEmailLabel }}</p>
+		<el-form :inline="true" @submit.prevent.native="onSubmit()">
+			<el-form-item>
+				<el-input
+					v-model="email"
+					type="email"
+					:placeholder="t.emailAddressLabel">
+				</el-input>
+			</el-form-item>
+			<el-form-item>
+				<el-button type="primary" @click="sendEmail()">{{ t.sendEmailLabel }}</el-button>&nbsp;
+				<router-link
+					:to="{name: 'dashboard'}">
+					<el-button>{{ t.cancelLabel }}</el-button>
+				</router-link>
+			</el-form-item>
+		</el-form>
 	</div>
 </template>
 
@@ -25,6 +28,7 @@ export default {
 	name: 'TodolistEmail',
 	data() {
 		return {
+			t: window.t,
 			email: '',
 		};
 	},

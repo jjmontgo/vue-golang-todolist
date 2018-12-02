@@ -1,27 +1,28 @@
 <template>
 	<div class="user-edit-page">
-		<h1>Edit User</h1>
-		<router-link :to="{name: 'users'}">Back to Users</router-link>
+		<h1>{{ t.editUserTitle }}</h1>
 
-		<div v-if="errorMessage !== false" class="alert alert-danger" role="alert">
-			{{ errorMessage }}
-		</div>
+		<p v-if="errorMessage !== false">
+			<el-alert type="error" :title="errorMessage"></el-alert>
+		</p>
 
-		<form @submit.prevent="onSubmit">
-			<div class="form-group">
-				<label for="username">Username</label>
-				<input v-model="user.username" class="form-control" type="text">
-			</div>
-			<div class="form-group">
-				<label for="email">Email</label>
-				<input v-model="user.email" class="form-control" type="text">
-			</div>
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input v-model="user.password" class="form-control" type="password">
-			</div>
-			<input type="submit" value="Save">
-		</form>
+		<el-form @submit.prevent.native="onSubmit" label-width="120px">
+			<el-form-item :label="t.usernameLabel">
+				<el-input v-model="user.username"></el-input>
+			</el-form-item>
+			<el-form-item :label="t.emailLabel">
+				<el-input v-model="user.email" type="email"></el-input>
+			</el-form-item>
+			<el-form-item :label="t.passwordLabel">
+				<el-input v-model="user.password" type="password"></el-input>
+			</el-form-item>
+			<el-form-item>
+				<el-button type="primary" @click="onSubmit">{{ t.saveLabel }}</el-button>&nbsp;
+				<router-link :to="{name: 'users'}">
+					<el-button>{{ t.backToUsersLabel }}</el-button>
+				</router-link>
+			</el-form-item>
+		</el-form>
 	</div>
 </template>
 
@@ -32,6 +33,7 @@ export default {
 	name: 'UserEdit',
 	data() {
 		return {
+			t: window.t,
 			errorMessage: false,
 			user: { id: '', username: '', email: '' },
 		};

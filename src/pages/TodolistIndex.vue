@@ -2,12 +2,12 @@
 	<div id="todolist-index-page">
 		<div style="float: right">
 			<router-link title="new todolist" :to="{name: 'todolist_new'}">
-				<v-icon name="plus-circle" label="new todolist" scale="3" />
+				<v-icon name="plus-circle" :label="t.newTodolistLabel" scale="3" />
 			</router-link>
 		</div>
-		<h1>Todo Lists</h1>
+		<h1>{{ t.todolistsTitle }}</h1>
 
-		<p>These are your todo lists:</p>
+		<p>{{ t.todolistsListLabel }}</p>
 		<div class="cards">
 			<el-card
 				v-for="todolist in todolists"
@@ -17,31 +17,31 @@
 					<span>{{ todolist.name }}</span>
 					<div style="float:right">
 						<router-link
-							title="edit"
+							:title="t.editLabel"
 							:to="{name: 'todolist_edit', params: {id: todolist.id}}"
 							class="btn btn-secondary">
-							<v-icon name="edit" label="edit" />
+							<v-icon name="edit" :label="t.editLabel" />
 						</router-link>&nbsp;
 
 						<router-link
-							title="see todos"
+							:title="t.seeTodosLabel"
 							:to="{name: 'todos', params: {id: todolist.id}}"
 							class="btn btn-secondary">
-							<v-icon name="list-ol" label="see todos" />
+							<v-icon name="list-ol" :label="t.seeTodosLabel" />
 						</router-link>&nbsp;
 
 						<router-link
-							title="email"
+							:title="t.emailLabel"
 							:to="{name: 'todolist_email', params: {id: todolist.id}}"
 							class="btn btn-secondary">
-							<v-icon name="at" label="email" />
+							<v-icon name="at" :label="t.emailLabel" />
 						</router-link>&nbsp;
 
 						<a href="#"
-							title="delete"
+							:title="t.deleteLabel"
 							type="submit"
 							@click.prevent="deleteTodolist(todolist.id)">
-							<v-icon name="trash" label="delete" />
+							<v-icon name="trash" :label="t.deleteLabel" />
 						</a>
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 						:to="{name: 'todolist_image', params: {id: todolist.id}}"
 						class="btn btn-link">
 						<img v-if="todolist.img_src" :src="todolist.img_src" style="width: 100%">
-						<div v-else>No Image</div>
+						<div v-else>{{ t.noImage }}</div>
 					</router-link>
 				</div>
 			</el-card>
@@ -99,6 +99,7 @@ export default {
 	},
 	data() {
 		return {
+			t: window.t,
 			todolists: [],
 		};
 	},
@@ -117,7 +118,7 @@ export default {
 		},
 		deleteTodolist(id) {
 			let backendUrl = this.$root.getBackendUrl('todolist_delete', { id });
-			if (confirm('Are you sure?')) {
+			if (confirm(this.t.deleteConfirmation)) {
 				ajaxPost(backendUrl)
 					.then(() => {
 						this.fetchTodolists();

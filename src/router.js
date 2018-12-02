@@ -15,7 +15,6 @@ import UserEdit from './pages/UserEdit.vue';
 Vue.use(Router);
 
 export default new Router({
-	mode: "history",
 	base: process.env.BASE_URL,
 	routes: [
 		{ name: 'dashboard', path: '/', component: TodolistIndex },

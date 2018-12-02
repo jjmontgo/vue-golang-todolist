@@ -12,6 +12,8 @@ import {
 	Input,
 	Menu,
 	MenuItem,
+	Table,
+	TableColumn,
 } from 'element-ui';
 
 Vue.component(Alert.name, Alert);
@@ -22,3 +24,5 @@ Vue.component(FormItem.name, FormItem);
 Vue.component(Input.name, Input);
 Vue.component(Menu.name, Menu);
 Vue.component(MenuItem.name, MenuItem);
+Vue.component(Table.name, Table);
+Vue.component(TableColumn.name, TableColumn);

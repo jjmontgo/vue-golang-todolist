@@ -1,7 +1,7 @@
 <template>
 	<div id="login-page">
 		<el-form>
-			<h1>Login</h1>
+			<h1>{{ t.loginLabel }}</h1>
 
 			<p v-if="loginError">
 				<el-alert
@@ -10,16 +10,20 @@
 				</el-alert>
 			</p>
 
-			<el-form-item label="Username">
-				<el-input v-model="username"></el-input>
+			<el-form-item :label="t.usernameLabel">
+				<el-input v-model="username" @keyup.enter.native="onSubmit"></el-input>
 			</el-form-item>
 
-			<el-form-item label="Password">
-				<el-input type="password" v-model="password"></el-input>
+			<el-form-item :label="t.passwordLabel">
+				<el-input
+					type="password"
+					v-model="password"
+					@keyup.enter.native="onSubmit">
+				</el-input>
 			</el-form-item>
 
 			<el-form-item>
-				<el-button type="primary" @click="onSubmit">Login</el-button>
+				<el-button type="primary" @click.prevent="onSubmit">{{ t.loginLabel }}</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
@@ -32,11 +36,7 @@
 		>form {
 			margin: auto;
 		}
-
 	}
-
-
-
 </style>
 
 <script>
@@ -49,7 +49,11 @@ export default {
 			loginError: false,
 			username: '',
 			password: '',
+			t: window.t
 		};
+	},
+	mounted() {
+		// console.log(this.t);
 	},
 	methods: {
 		onSubmit() {
